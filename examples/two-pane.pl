@@ -8,6 +8,8 @@ vbox {
  menubar {
   submenu File => sub {
    menuitem Open  => sub { warn 'open' };
+   menuspacer;
+   menuitem Exit  => sub { tickit->stop };
   };
   submenu Edit => sub {
    menuitem Copy  => sub { warn 'copy' };
@@ -22,14 +24,16 @@ vbox {
  # A 2-panel layout covers most of the rest of the display
  widget {
   # Left and right panes:
-  hbox {
+  vsplit {
    # A tree on the left, 1/4 total width
    widget {
-    tree { };
+    placeholder;
    } expand => 1;
    # and a tab widget on the right, 3/4 total width
    widget {
-    tabbed { };
+    tabbed {
+     widget { placeholder } label => 'First thing';
+	};
    } expand => 3;
   } expand => 1;
  } expand => 1;

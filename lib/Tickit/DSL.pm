@@ -61,6 +61,7 @@ use Tickit::Async;
 use IO::Async::Loop;
 
 our $PARENT;
+our @PENDING_CHILD;
 our $TICKIT;
 our $LOOP;
 our @WIDGET_ARGS;
@@ -69,11 +70,13 @@ our @EXPORT = our @EXPORT_OK = qw(
 	tickit
 	widget
 	vbox hbox
+	vsplit hsplit
 	static entry
 	scroller scroller_text
 	tabbed
 	tree
 	table
+	placeholder
 	statusbar
 	menubar submenu menuitem menuspacer
 );
@@ -100,11 +103,15 @@ sub vbox(&@) {
 
 sub vsplit(&@) {
 	my ($code, %args) = @_;
-	my $w = Tickit::Widget::VSplit->new;
-	{
-		local $PARENT = $w;
-		$code->($w);
-	}
+	my $w = do {
+		local $PARENT = 'Tickit::Widget::VSplit';
+		local @PENDING_CHILD;
+		$code->();
+		Tickit::Widget::VSplit->new(
+			left_child  => $PENDING_CHILD[0],
+			right_child => $PENDING_CHILD[1],
+		);
+	};
 	apply_widget($w);
 }
 
@@ -120,11 +127,15 @@ sub hbox(&@) {
 
 sub hsplit(&@) {
 	my ($code, %args) = @_;
-	my $w = Tickit::Widget::HSplit->new;
-	{
-		local $PARENT = $w;
-		$code->($w);
-	}
+	my $w = do {
+		local $PARENT = 'Tickit::Widget::HSplit';
+		local @PENDING_CHILD;
+		$code->();
+		Tickit::Widget::HSplit->new(
+			top_child    => $PENDING_CHILD[0],
+			bottom_child => $PENDING_CHILD[1],
+		);
+	};
 	apply_widget($w);
 }
 
@@ -196,6 +207,10 @@ sub tree(&@) {
 	apply_widget($w);
 }
 
+sub placeholder() {
+	apply_widget(Tickit::Widget::Placegrid->new);
+}
+
 sub menubar(&@) {
 	my ($code, %args) = @_;
 	my $w = Tickit::Widget::MenuBar->new;
@@ -240,6 +255,12 @@ sub apply_widget {
 			$PARENT->push_item($w, @WIDGET_ARGS);
 		} elsif($PARENT->isa('Tickit::Widget::MenuBar')) {
 			$PARENT->push_item($w, @WIDGET_ARGS);
+		} elsif($PARENT->isa('Tickit::Widget::HSplit')) {
+			push @PENDING_CHILD, $w;
+		} elsif($PARENT->isa('Tickit::Widget::VSplit')) {
+			push @PENDING_CHILD, $w;
+		} elsif($PARENT->isa('Tickit::Widget::Tabbed')) {
+			$PARENT->add_tab($w, @WIDGET_ARGS);
 		} else {
 			$PARENT->add($w, @WIDGET_ARGS);
 		}
