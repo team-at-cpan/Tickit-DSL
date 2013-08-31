@@ -57,10 +57,7 @@ use Tickit::Widget::Tree;
 use Tickit::Widget::VBox;
 use Tickit::Widget::VSplit;
 
-use Tickit::Async;
-
-# mostly used for timer purposes (statusbar for example)
-use IO::Async::Loop;
+use List::UtilsBy qw(extract_by);
 
 our $MODE;
 our $PARENT;
@@ -68,10 +65,14 @@ our @PENDING_CHILD;
 our $TICKIT;
 our $LOOP;
 our @WIDGET_ARGS;
+our $GRID_COL;
+our $GRID_ROW;
 
 our @EXPORT = our @EXPORT_OK = qw(
 	tickit later loop
-	widget
+	widget customwidget
+	add_widgets
+	gridbox gridrow
 	vbox hbox
 	vsplit hsplit
 	static entry
@@ -93,6 +94,14 @@ sub import {
 		$MODE = $mode;
 	}
 	$MODE ||= ':sync';
+	if($MODE eq ':sync') {
+		require Tickit;
+	} elsif($MODE eq ':async') {
+		require IO::Async::Loop;
+		require Tickit::Async;
+	} else {
+		die "Unknown mode: $MODE";
+	}
     $class->export_to_level(1, $class, @_);
 }
 =head1 FUNCTIONS
@@ -100,6 +109,12 @@ sub import {
 All of these are exported unless otherwise noted.
 
 =cut
+
+sub loop {
+	die "No loop available when running as $MODE" unless $MODE eq ':async';
+	$LOOP = shift if @_;
+	$LOOP ||= IO::Async::Loop->new
+}
 
 sub tickit {
 	$TICKIT = shift if @_;
@@ -119,10 +134,12 @@ sub later(&) {
 	tickit->later($code)
 }
 
-sub loop {
-	die "No loop available when running as $MODE" unless $MODE eq ':async';
-	$LOOP = shift if @_;
-	$LOOP ||= IO::Async::Loop->new
+sub add_widgets(&@) {
+	my $code = shift;
+	my %args = @_;
+	local $PARENT = delete $args{under} or die 'expected add_widgets { ... } under => $some_widget;';
+	local @WIDGET_ARGS = %args;
+	$code->($PARENT);
 }
 
 sub vbox(&@) {
@@ -147,6 +164,26 @@ sub vsplit(&@) {
 		);
 	};
 	apply_widget($w);
+}
+
+sub gridbox(&@) {
+	my ($code, %args) = @_;
+	my $w = Tickit::Widget::GridBox->new;
+	{
+		local $PARENT = $w;
+		local $GRID_COL = 0;
+		local $GRID_ROW = 0;
+		$code->($w);
+	}
+	apply_widget($w);
+}
+
+sub gridrow(&@) {
+	my ($code, %args) = @_;
+	die "Grid rows must be in a gridbox" unless $PARENT->isa('Tickit::Widget::GridBox');
+	apply_widget($code->($PARENT));
+	$GRID_COL = 0;
+	++$GRID_ROW;
 }
 
 sub hbox(&@) {
@@ -200,7 +237,7 @@ sub tabbed(&@) {
 
 sub statusbar(&@) {
 	my ($code, %args) = @_;
-	my $w = Tickit::Widget::Statusbar->new(loop => loop);
+	my $w = Tickit::Widget::Statusbar->new;
 	{
 		local $PARENT = $w;
 		$code->($w);
@@ -210,10 +247,23 @@ sub statusbar(&@) {
 
 sub widget(&@) {
 	my ($code, @args) = @_;
-	local @WIDGET_ARGS = @args;
 	my %args = @args;
-	local $PARENT = $args{parent} || $PARENT;
-	$code->($PARENT);
+	local $PARENT = delete($args{parent}) || $PARENT;
+	{
+		local @WIDGET_ARGS = @args;
+		$code->($PARENT);
+	}
+}
+
+sub customwidget(&@) {
+	my ($code, @args) = @_;
+	my %args = @args;
+	local $PARENT = delete($args{parent}) || $PARENT;
+	my $w = $code->($PARENT);
+	{
+		local @WIDGET_ARGS = %args;
+		apply_widget($w);
+	}
 }
 
 sub static {
@@ -295,6 +345,8 @@ sub apply_widget {
 			push @PENDING_CHILD, $w;
 		} elsif($PARENT->isa('Tickit::Widget::Tabbed')) {
 			$PARENT->add_tab($w, @WIDGET_ARGS);
+		} elsif($PARENT->isa('Tickit::Widget::GridBox')) {
+			$PARENT->add($GRID_ROW, $GRID_COL++, $w, @WIDGET_ARGS);
 		} else {
 			$PARENT->add($w, @WIDGET_ARGS);
 		}

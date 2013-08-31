@@ -2,6 +2,7 @@ requires 'parent', 0;
 requires 'curry', 0;
 requires 'Future', '>= 0.15';
 requires 'Try::Tiny', 0;
+requires 'List::UtilsBy', 0;
 requires 'Mixin::Event::Dispatch', '>= 1.000';
 
 requires 'Tickit', '>= 0.37';
