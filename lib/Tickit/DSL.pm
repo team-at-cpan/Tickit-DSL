@@ -47,10 +47,12 @@ use Tickit::Widget::Scroller::Item::Text;
 use Tickit::Widget::ScrollBox;
 use Tickit::Widget::SegmentDisplay;
 use Tickit::Widget::SparkLine;
+use Tickit::Widget::Spinner;
 use Tickit::Widget::Static;
 use Tickit::Widget::Statusbar;
 use Tickit::Widget::Tabbed;
 use Tickit::Widget::Table;
+use Tickit::Widget::Table::Paged;
 use Tickit::Widget::Tree;
 use Tickit::Widget::VBox;
 use Tickit::Widget::VSplit;
@@ -60,6 +62,7 @@ use Tickit::Async;
 # mostly used for timer purposes (statusbar for example)
 use IO::Async::Loop;
 
+our $MODE;
 our $PARENT;
 our @PENDING_CHILD;
 our $TICKIT;
@@ -67,7 +70,7 @@ our $LOOP;
 our @WIDGET_ARGS;
 
 our @EXPORT = our @EXPORT_OK = qw(
-	tickit later
+	tickit later loop
 	widget
 	vbox hbox
 	vsplit hsplit
@@ -81,17 +84,46 @@ our @EXPORT = our @EXPORT_OK = qw(
 	menubar submenu menuitem menuspacer
 );
 
+sub import {
+	my $class = shift;
+	my ($mode) = extract_by { /^:a?sync$/ } @_;
+	if($MODE && $mode && $mode ne $MODE) {
+		die "Cannot mix sync/async - we are already $MODE and were requested to switch to $mode";
+	} elsif($mode) {
+		$MODE = $mode;
+	}
+	$MODE ||= ':sync';
+    $class->export_to_level(1, $class, @_);
+}
 =head1 FUNCTIONS
 
 All of these are exported unless otherwise noted.
 
 =cut
 
-sub tickit { $TICKIT = shift if @_; $TICKIT ||= Tickit::Async->new }
+sub tickit {
+	$TICKIT = shift if @_;
+	return $TICKIT if $TICKIT;
 
-sub later(&) { my $code = shift; tickit->later($code) }
+	if($MODE eq ':async') {
+		$TICKIT = Tickit::Async->new;
+		loop->add($TICKIT);
+	} else {
+		$TICKIT ||= Tickit->new;
+	}
+	$TICKIT
+}
 
-sub loop { $LOOP = shift if @_; $LOOP ||= IO::Async::Loop->new }
+sub later(&) {
+	my $code = shift;
+	tickit->later($code)
+}
+
+sub loop {
+	die "No loop available when running as $MODE" unless $MODE eq ':async';
+	$LOOP = shift if @_;
+	$LOOP ||= IO::Async::Loop->new
+}
 
 sub vbox(&@) {
 	my ($code, %args) = @_;
