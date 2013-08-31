@@ -67,7 +67,7 @@ our $LOOP;
 our @WIDGET_ARGS;
 
 our @EXPORT = our @EXPORT_OK = qw(
-	tickit
+	tickit later
 	widget
 	vbox hbox
 	vsplit hsplit
@@ -88,6 +88,8 @@ All of these are exported unless otherwise noted.
 =cut
 
 sub tickit { $TICKIT = shift if @_; $TICKIT ||= Tickit::Async->new }
+
+sub later(&) { my $code = shift; tickit->later($code) }
 
 sub loop { $LOOP = shift if @_; $LOOP ||= IO::Async::Loop->new }
 
