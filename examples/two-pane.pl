@@ -1,4 +1,4 @@
-#!/usr/bin/env perl 
+#!/usr/bin/env perl
 use strict;
 use warnings;
 use Tickit::DSL;
@@ -38,7 +38,8 @@ vbox {
   } expand => 1;
  } expand => 1;
  # At the bottom of the screen we show the status bar
- statusbar { } show => [qw(clock cpu memory debug)];
+ # statusbar { } show => [qw(clock cpu memory debug)];
+ # although it's not on CPAN yet so we don't
 };
 tickit->run;
 
