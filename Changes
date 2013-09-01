@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.002     2013-09-01 21:40:45 Europe/London
 	Features:
 	* Tickit::Widget::Statusbar is now on CPAN,
 	so it has been added to the deps list
