@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	No new features.
+
+	Bug fixes:
+	* gridrow was double-adding widgets. Now fixed.
 
 0.002     2013-09-01 21:40:45 Europe/London
 	Features:

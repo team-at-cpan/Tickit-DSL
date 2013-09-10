@@ -322,7 +322,7 @@ something like a container, see L</gridbox> for details.
 sub gridrow(&@) {
 	my ($code) = @_;
 	die "Grid rows must be in a gridbox" unless $PARENT->isa('Tickit::Widget::GridBox');
-	apply_widget($code->($PARENT));
+	$code->($PARENT);
 	$GRID_COL = 0;
 	++$GRID_ROW;
 }
