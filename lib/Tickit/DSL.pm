@@ -726,6 +726,8 @@ sub apply_widget {
 			push @PENDING_CHILD, $w;
 		} elsif($PARENT->isa('Tickit::Widget::VSplit')) {
 			push @PENDING_CHILD, $w;
+		} elsif($PARENT->isa('Tickit::Widget::ScrollBox')) {
+			push @PENDING_CHILD, $w;
 		} elsif($PARENT->isa('Tickit::Widget::Tabbed')) {
 			$PARENT->add_tab($w, @WIDGET_ARGS);
 		} elsif($PARENT->isa('Tickit::Widget::GridBox')) {
