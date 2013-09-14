@@ -241,11 +241,13 @@ instance:
 
 sub vbox(&@) {
 	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::VBox->new(%args);
 	{
 		local $PARENT = $w;
 		$code->($w);
 	}
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -269,6 +271,7 @@ instance:
 
 sub vsplit(&@) {
 	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = do {
 		local $PARENT = 'Tickit::Widget::VSplit';
 		local @PENDING_CHILD;
@@ -279,6 +282,7 @@ sub vsplit(&@) {
 			%args,
 		);
 	};
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -303,6 +307,7 @@ instance:
 
 sub gridbox(&@) {
 	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::GridBox->new(%args);
 	{
 		local $PARENT = $w;
@@ -310,6 +315,7 @@ sub gridbox(&@) {
 		local $GRID_ROW = 0;
 		$code->($w);
 	}
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -348,11 +354,13 @@ instance:
 
 sub hbox(&@) {
 	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::HBox->new(%args);
 	{
 		local $PARENT = $w;
 		$code->($w);
 	}
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -376,6 +384,7 @@ instance:
 
 sub hsplit(&@) {
 	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = do {
 		local $PARENT = 'Tickit::Widget::HSplit';
 		local @PENDING_CHILD;
@@ -386,6 +395,7 @@ sub hsplit(&@) {
 			%args
 		);
 	};
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -406,6 +416,7 @@ instance:
 
 sub scrollbox(&@) {
 	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = do {
 		local $PARENT = 'Tickit::Widget::ScrollBox';
 		local @PENDING_CHILD;
@@ -416,6 +427,7 @@ sub scrollbox(&@) {
 			%args
 		);
 	};
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -438,11 +450,13 @@ Passes any additional args to the constructor:
 
 sub scroller(&@) {
 	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::Scroller->new(%args);
 	{
 		local $PARENT = $w;
 		$code->($w);
 	}
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -460,18 +474,19 @@ sub scroller_text {
 =head2 tabbed
 
 Creates a L<Tickit::Widget::Tabbed> instance. Use the L</widget> wrapper
-to set the label when adding new tabs.
+to set the label when adding new tabs, or provide the
+label as a parent: attribute:
 
  tabbed {
    widget { static 'some text' } label => 'first tab';
-   widget { static 'other text' } label => 'second tab';
+   static 'other text' 'parent:label' => 'second tab';
  };
 
 If you want a different ribbon, pass it like so:
 
  tabbed {
-   widget { static 'some text' } label => 'first tab';
-   widget { static 'other text' } label => 'second tab';
+   static 'some text' 'parent:label' => 'first tab';
+   static 'other text' 'parent:label' => 'second tab';
  } ribbon_class => 'Some::Ribbon::Class', tab_position => 'top';
 
 The C<ribbon_class> parameter may be undocumented.
@@ -480,11 +495,13 @@ The C<ribbon_class> parameter may be undocumented.
 
 sub tabbed(&@) {
 	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::Tabbed->new(%args);
 	{
 		local $PARENT = $w;
 		$code->($w);
 	}
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -496,11 +513,13 @@ A L<Tickit::Widget::Statusbar>. Not very exciting.
 
 sub statusbar(&@) {
 	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::Statusbar->new(%args);
 	{
 		local $PARENT = $w;
 		$code->($w);
 	}
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -519,9 +538,11 @@ You can be more specific if you want:
 sub static {
 	my %args = (text => @_);
 	$args{text} //= '';
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::Static->new(
 		%args
 	);
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -537,9 +558,11 @@ since the C<on_enter> handler seems like an important feature.
 
 sub entry(&@) {
 	my %args = (on_enter => @_);
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::Entry->new(
 		%args
 	);
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -551,9 +574,11 @@ A L<Tickit::Widget::Tree>. If it works I'd be amazed.
 
 sub tree(&@) {
 	my %args = (on_enter => @_);
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::Tree->new(
 		%args
 	);
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -565,12 +590,15 @@ so there aren't many options.
  placeholder;
  vbox {
    widget { placeholder } expand => 3;
-   widget { placeholder } expand => 5;
+   placeholder 'parent:expand' => 5;
  };
 
 =cut
 
-sub placeholder() {
+sub placeholder(@) {
+	my %args = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget(Tickit::Widget::Placegrid->new);
 }
 
@@ -593,11 +621,13 @@ one of these.
 
 sub menubar(&@) {
 	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::MenuBar->new(%args);
 	{
 		local $PARENT = $w;
 		$code->($w);
 	}
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -612,11 +642,14 @@ See L</menubar>.
 
 sub submenu {
 	my ($text, $code) = splice @_, 0, 2;
+	my %args = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::Menu->new(name => $text);
 	{
 		local $PARENT = $w;
 		$code->($w);
 	}
+	local @WIDGET_ARGS = %parent_args;
 	apply_widget($w);
 }
 
@@ -639,6 +672,7 @@ A menu is not much use without something in it. See L</menubar>.
 
 sub menuitem {
 	my ($text, $code) = splice @_, 0, 2;
+	my %args = @_;
 	my $w = Tickit::Widget::Menu::Item->new(
 		name        => $text,
 		on_activate => $code,
@@ -691,6 +725,16 @@ in context, this would be:
  vbox {
    widget { static => '33%' } expand => 1;
    widget { static => '66%' } expand => 2;
+ };
+
+Note that this functionality can also be applied
+by passing attributes with the C<parent:> prefix
+o the widgets themselves - the above example would
+thus be:
+
+ vbox {
+   static => '33%' 'parent:expand' => 1;
+   static => '66%' 'parent:expand' => 2;
  };
 
 =cut

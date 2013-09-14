@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Features:
+	* Allow parent:X notation to avoid having to
+	wrap everything in widget {} blocks.
 
 0.004     2013-09-13 19:41:43 Europe/London
 	Features:
