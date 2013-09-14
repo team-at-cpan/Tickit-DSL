@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.006     2013-09-14 23:57:33 Europe/London
 	Features:
 	* Support the ::Decoration widget
 

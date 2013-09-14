@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use parent qw(Exporter);
 
-our $VERSION = '0.004';
+our $VERSION = '0.006';
 
 =head1 NAME
 
