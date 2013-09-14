@@ -672,7 +672,6 @@ A menu is not much use without something in it. See L</menubar>.
 
 sub menuitem {
 	my ($text, $code) = splice @_, 0, 2;
-	my %args = @_;
 	my $w = Tickit::Widget::Menu::Item->new(
 		name        => $text,
 		on_activate => $code,
