@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.008     2013-09-15 19:01:51 Europe/London
 	Features:
 	* Support timers - 'timer { ... } after => 5;'
 
