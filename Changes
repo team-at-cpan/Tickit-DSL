@@ -1,6 +1,14 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Features:
+	* Support the ::Layout::Relative widget
+
+	Bug fixes:
+	* Make sure widget arguments are propagated where appropriate
+
+	Documentation:
+	* Add section headings to divide the widget functions by purpose
 
 0.006     2013-09-14 23:57:33 Europe/London
 	Features:
