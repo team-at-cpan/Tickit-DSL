@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use parent qw(Exporter);
 
-our $VERSION = '0.006';
+our $VERSION = '0.007';
 
 =head1 NAME
 
@@ -40,6 +40,7 @@ use Tickit::Widget::Frame;
 use Tickit::Widget::GridBox;
 use Tickit::Widget::HBox;
 use Tickit::Widget::HSplit;
+use Tickit::Widget::Layout::Relative;
 use Tickit::Widget::Menu;
 use Tickit::Widget::MenuBar;
 use Tickit::Widget::Menu::Item;
@@ -78,19 +79,17 @@ our @EXPORT = our @EXPORT_OK = qw(
 	tickit later loop
 	widget customwidget
 	add_widgets
-	gridbox gridrow
-	vbox hbox
-	vsplit hsplit
+	gridbox gridrow vbox hbox vsplit hsplit relative
 	static entry
-	scroller scroller_text
-	scrollbox
+	scroller scroller_text scrollbox
 	tabbed
-	tree
-	table
+	tree table
 	placeholder placegrid decoration
 	statusbar
 	menubar submenu menuitem menuspacer
 );
+
+=head1 METHODS
 
 =head2 import
 
@@ -144,9 +143,10 @@ sub import {
 	}
     $class->export_to_level(1, $class, @_);
 }
-=head1 FUNCTIONS
 
-All of these are exported unless otherwise noted.
+=head1 FUNCTIONS - Utility
+
+All functions are exported, unless otherwise noted.
 
 =cut
 
@@ -221,6 +221,10 @@ sub add_widgets(&@) {
 	$code->($PARENT);
 	$PARENT;
 }
+
+=head1 FUNCTIONS - Layout
+
+The following functions create/manage widgets which are useful for layout purposes.
 
 =head2 vbox
 
@@ -400,6 +404,45 @@ sub hsplit(&@) {
 	apply_widget($w);
 }
 
+=head2 relative
+
+See L</pane> for the details.
+
+=cut
+
+sub relative(&@) {
+	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+	my $w = Tickit::Widget::Layout::Relative->new(%args);
+	{
+		local $PARENT = $w;
+		$code->($w);
+	}
+	local @WIDGET_ARGS = %parent_args;
+	apply_widget($w);
+}
+
+=head2 pane
+
+A pane in a L</relative> layout.
+
+=cut
+
+sub pane(&@) {
+	my ($code, %args) = @_;
+	die "pane should be used within a relative { ... } item" unless $PARENT->isa('Tickit::Widget::Layout::Relative');
+	{
+		$code->($PARENT);
+	}
+	local @WIDGET_ARGS = %args;
+	apply_widget($w);
+}
+
+=head1 FUNCTIONS - Scrolling
+
+The following functions create/manage widgets which deal with data that wouldn't
+normally fit in the available terminal space.
+
 =head2 scrollbox
 
 Creates a L<Tickit::Widget::ScrollBox>. This is a container, so the first
@@ -471,6 +514,10 @@ sub scroller_text {
 	my $w = Tickit::Widget::Scroller::Item::Text->new(shift // '');
 	apply_widget($w);
 }
+
+=head1 FUNCTIONS - Miscellaneous container
+
+These act as containers.
 
 =head2 tabbed
 
@@ -632,6 +679,10 @@ sub decoration(@) {
 	apply_widget(Tickit::Widget::Decoration->new(%args));
 }
 
+=head2 FUNCTIONS - Menu-related
+
+Things for menus
+
 =head2 menubar
 
 Menubar courtesy of L<Tickit::Widget::MenuBar>. Every self-respecting app wants
@@ -709,6 +760,10 @@ sub menuitem {
 	);
 	apply_widget($w);
 }
+
+=head2 FUNCTIONS - Generic or internal use
+
+Things that don't really fit into the other categories.
 
 =head2 customwidget
 
@@ -830,6 +885,8 @@ __END__
 
 =item * L<Tickit::Widget::CheckButton>
 
+=item * L<Tickit::Widget::Decoration>
+
 =item * L<Tickit::Widget::Entry>
 
 =item * L<Tickit::Widget::Frame>
@@ -839,6 +896,8 @@ __END__
 =item * L<Tickit::Widget::HBox>
 
 =item * L<Tickit::Widget::HSplit>
+
+=item * L<Tickit::Widget::Layout::Relative>
 
 =item * L<Tickit::Widget::Menu>
 
