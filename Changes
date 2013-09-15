@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.007     2013-09-15 16:40:15 Europe/London
 	Features:
 	* Support the ::Layout::Relative widget
 
