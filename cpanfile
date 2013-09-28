@@ -1,4 +1,6 @@
 requires 'parent', 0;
+requires 'Exporter', 0;
+requires 'List::UtilsBy', 0;
 
 requires 'Tickit', '>= 0.37';
 requires 'Tickit::Widgets', '>= 0.12';

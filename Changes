@@ -1,6 +1,11 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Features:
+	* Added checkbox (Tickit::Widget::CheckButton)
+
+	Dependencies:
+	* Cleaned up cpanfile dep list
 
 0.008     2013-09-15 19:01:51 Europe/London
 	Features:
