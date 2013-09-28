@@ -655,6 +655,15 @@ sub checkbox(&@) {
 	apply_widget($w);
 }
 
+=head2 button
+
+A button. First parameter is the code to run when activated,
+second parameter is the label:
+
+ button { warn "Activated" } 'OK';
+
+=cut
+
 sub button(&@) {
 	my $code = shift;
 	my %args = (on_click => $code, label => @_);
