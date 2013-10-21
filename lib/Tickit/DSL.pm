@@ -33,6 +33,7 @@ mainly intended for prototyping:
 use Tickit::Widget::Border;
 use Tickit::Widget::Box;
 use Tickit::Widget::Button;
+use Tickit::Widget::Calendar::MonthView;
 use Tickit::Widget::CheckButton;
 use Tickit::Widget::Decoration;
 use Tickit::Widget::Entry;
@@ -66,6 +67,7 @@ use List::UtilsBy qw(extract_by);
 
 our $MODE;
 our $PARENT;
+our $RADIOGROUP;
 our @PENDING_CHILD;
 our $TICKIT;
 our $LOOP;
@@ -79,12 +81,14 @@ our @EXPORT = our @EXPORT_OK = qw(
 	add_widgets
 	gridbox gridrow vbox hbox vsplit hsplit relative pane
 	static entry checkbox button
+	radiogroup radiobutton
 	scroller scroller_text scrollbox
 	tabbed
 	tree table
 	placeholder placegrid decoration
 	statusbar
 	menubar submenu menuitem menuspacer
+	monthview
 );
 
 =head1 METHODS
@@ -645,14 +649,51 @@ Checkbox (or checkbutton).
 =cut
 
 sub checkbox(&@) {
-	shift;
-	my %args = @_;
+	my %args = (on_toggle => @_);
 	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::CheckButton->new(
 		%args
 	);
 	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
 	apply_widget($w);
+}
+
+=head2 radiogroup
+
+ radiogroup {
+  radiobutton { } 'one';
+  radiobutton { } 'two';
+  radiobutton { } 'three';
+ };
+
+=cut
+
+sub radiobutton(&@) {
+	my $code = shift;
+	die "need a radiogroup" unless $RADIOGROUP;
+	my %args = (
+		group => $RADIOGROUP,
+		label => @_
+	);
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+	my $w = Tickit::Widget::RadioButton->new(%args);
+	$w->set_on_toggle($code);
+	{
+		local @WIDGET_ARGS = %parent_args;
+		apply_widget($w);
+	}
+}
+
+sub radiogroup(&@) {
+	my $code = shift;
+	my %args = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+	my $group = Tickit::Widget::RadioButton::Group->new;
+	$group->set_on_changed(delete $args{on_changed}) if exists $args{on_changed};
+	{
+		local $RADIOGROUP = $group;
+		$code->();
+	}
 }
 
 =head2 button

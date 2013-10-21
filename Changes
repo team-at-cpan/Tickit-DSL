@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Features:
+	* Radio button support (Tickit::Widget::RadioButton)
+	* Calendar support (Tickit::Widget::Calendar::MonthView)
 
 0.009     2013-09-28 20:04:55 Europe/London
 	Features:
