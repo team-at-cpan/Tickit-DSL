@@ -4,7 +4,6 @@ requires 'List::UtilsBy', 0;
 
 requires 'Tickit', '>= 0.37';
 requires 'Tickit::Widgets', '>= 0.12';
-requires 'Tickit::Widget::Calendar::MonthView', '>= 0.001';
 requires 'Tickit::Widget::Decoration', '>= 0.001';
 requires 'Tickit::Widget::Layout::Relative', '>= 0.003';
 requires 'Tickit::Widget::Menu', '>= 0.05';
