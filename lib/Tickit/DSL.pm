@@ -682,7 +682,7 @@ sub checkbox(&@) {
 	apply_widget($w);
 }
 
-=head2 radiogroup
+=head2 radiobutton
 
  radiogroup {
   radiobutton { } 'one';
@@ -708,10 +708,16 @@ sub radiobutton(&@) {
 	}
 }
 
+=head2 radiogroup
+
+See L</radiobutton>.
+
+=cut
+
 sub radiogroup(&@) {
 	my $code = shift;
 	my %args = @_;
-	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+	# my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $group = Tickit::Widget::RadioButton::Group->new;
 	$group->set_on_changed(delete $args{on_changed}) if exists $args{on_changed};
 	{
