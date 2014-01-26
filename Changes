@@ -3,7 +3,8 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
 	Features:
 	* Radio button support (Tickit::Widget::RadioButton)
-	* Calendar support (Tickit::Widget::Calendar::MonthView)
+	* Frame support (Tickit::Widget::Frame)
+	* Dropped ::Table pending updated version on CPAN
 
 0.009     2013-09-28 20:04:55 Europe/London
 	Features:

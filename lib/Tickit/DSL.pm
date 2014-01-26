@@ -33,7 +33,6 @@ mainly intended for prototyping:
 use Tickit::Widget::Border;
 use Tickit::Widget::Box;
 use Tickit::Widget::Button;
-use Tickit::Widget::Calendar::MonthView;
 use Tickit::Widget::CheckButton;
 use Tickit::Widget::Decoration;
 use Tickit::Widget::Entry;
@@ -57,7 +56,6 @@ use Tickit::Widget::Spinner;
 use Tickit::Widget::Static;
 use Tickit::Widget::Statusbar;
 use Tickit::Widget::Tabbed;
-use Tickit::Widget::Table;
 use Tickit::Widget::Table::Paged;
 use Tickit::Widget::Tree;
 use Tickit::Widget::VBox;
@@ -79,7 +77,7 @@ our @EXPORT = our @EXPORT_OK = qw(
 	tickit later timer loop
 	widget customwidget
 	add_widgets
-	gridbox gridrow vbox hbox vsplit hsplit relative pane
+	gridbox gridrow vbox hbox vsplit hsplit relative pane frame
 	static entry checkbox button
 	radiogroup radiobutton
 	scroller scroller_text scrollbox
@@ -313,6 +311,32 @@ sub vsplit(&@) {
 			%args,
 		);
 	};
+	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
+	apply_widget($w);
+}
+
+=head2 frame
+
+Uses L<Tickit::Widget::Frame> to draw a frame around a single widget. This is a container, so the first
+parameter is a coderef which will switch the current parent to the new frame.
+
+Any additional parameters will be passed to the new L<Tickit::Widget::Frame>
+instance:
+
+ frame {
+   ...
+ } title => 'some frame', title_align => 0.5;
+
+=cut
+
+sub frame(&@) {
+	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+	my $w = Tickit::Widget::Frame->new(%args);
+	{
+		local $PARENT = $w;
+		$code->($w);
+	}
 	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
 	apply_widget($w);
 }
