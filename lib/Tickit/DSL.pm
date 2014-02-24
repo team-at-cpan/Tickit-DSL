@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use parent qw(Exporter);
 
-our $VERSION = '0.010';
+our $VERSION = '0.011';
 
 =head1 NAME
 
@@ -49,6 +49,7 @@ use Tickit::Widget::Progressbar;
 use Tickit::Widget::RadioButton;
 use Tickit::Widget::Scroller;
 use Tickit::Widget::Scroller::Item::Text;
+use Tickit::Widget::Scroller::Item::RichText;
 use Tickit::Widget::ScrollBox;
 use Tickit::Widget::SegmentDisplay;
 use Tickit::Widget::SparkLine;
@@ -80,7 +81,7 @@ our @EXPORT = our @EXPORT_OK = qw(
 	gridbox gridrow vbox hbox vsplit hsplit relative pane frame
 	static entry checkbox button
 	radiogroup radiobutton
-	scroller scroller_text scrollbox
+	scroller scroller_text scroller_richtext scrollbox
 	tabbed
 	tree table
 	placeholder placegrid decoration
@@ -564,6 +565,23 @@ A text item, expects to be added to a L</scroller>.
 
 sub scroller_text {
 	my $w = Tickit::Widget::Scroller::Item::Text->new(shift // '');
+	apply_widget($w);
+}
+
+=head2 scroller_richtext
+
+A text item, expects to be added to a L</scroller>. The item itself should be
+a L<String::Tagged> instance, like this:
+
+ my $str = String::Tagged->new( "An important message" );
+ $str->apply_tag( 3, 9, b => 1 );
+ scroller_richtext $str;
+
+
+=cut
+
+sub scroller_richtext {
+	my $w = Tickit::Widget::Scroller::Item::RichText->new(shift);
 	apply_widget($w);
 }
 
