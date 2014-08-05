@@ -37,6 +37,7 @@ use Tickit::Widget::CheckButton;
 use Tickit::Widget::Decoration;
 use Tickit::Widget::Entry;
 use Tickit::Widget::Frame;
+use Tickit::Widget::FloatBox;
 use Tickit::Widget::GridBox;
 use Tickit::Widget::HBox;
 use Tickit::Widget::HSplit;
@@ -79,6 +80,7 @@ our @EXPORT = our @EXPORT_OK = qw(
 	widget customwidget
 	add_widgets
 	gridbox gridrow vbox hbox vsplit hsplit relative pane frame
+	floatbox float
 	static entry checkbox button
 	radiogroup radiobutton
 	scroller scroller_text scroller_richtext scrollbox
@@ -623,6 +625,78 @@ sub tabbed(&@) {
 	apply_widget($w);
 }
 
+=head2 floatbox
+
+A container which normally has no visible effect, but provides the ability to contain L</float>s.
+These are floating windows which can be located anywhere within the container, usually for the purpose
+of providing dynamic windows such as popups and dropdowns.
+
+ floatbox {
+  vbox {
+   button {
+    float {
+     static 'this is a float'
+	} lines => 3, top => -1, left => '-50%';
+   } 'Show';
+  }
+ }
+
+=cut
+
+sub floatbox(&@) {
+	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+	my $w = Tickit::Widget::FloatBox->new(%args);
+	{
+		local $PARENT = $w;
+		$code->($w);
+	}
+	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
+	apply_widget($w);
+}
+
+=head2 float
+
+A L</float> provides a floating window within a L</floatbox> container - note that the L</floatbox>
+does not need to be an immediate parent.
+
+ floatbox {
+  vbox {
+   button {
+    float {
+     static 'this is a float'
+	} lines => 3, top => -1, left => '-50%';
+   } 'Show';
+  }
+ }
+
+=cut
+
+sub float(&@) {
+	my ($code, %args) = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+
+	my $floatbox = delete($args{container}) || $PARENT;
+	warn "FB = $floatbox\n";
+
+	while($floatbox && !$floatbox->isa('Tickit::Widget::FloatBox')) {
+		$floatbox = $floatbox->parent;
+		warn "FB = $floatbox\n";
+	}
+	die "No floatbox found for this float" unless $floatbox;
+
+	my $w = Tickit::Widget::VBox->new;
+	$floatbox->add_float(
+		child => $w,
+		%args
+	);
+	later {
+		local $PARENT = $w;
+		warn "in later";
+		$code->($w);
+	};
+}
+
 =head2 statusbar
 
 A L<Tickit::Widget::Statusbar>. Not very exciting.
@@ -1012,6 +1086,9 @@ sub apply_widget {
 			$PARENT->add_tab($w, @WIDGET_ARGS);
 		} elsif($PARENT->isa('Tickit::Widget::GridBox')) {
 			$PARENT->add($GRID_ROW, $GRID_COL++, $w, @WIDGET_ARGS);
+		} elsif($PARENT->isa('Tickit::Widget::FloatBox')) {
+			$PARENT->set_base_child($w);
+			$PARENT->add($w);
 		} else {
 			$PARENT->add($w, @WIDGET_ARGS);
 		}

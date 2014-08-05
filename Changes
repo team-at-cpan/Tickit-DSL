@@ -3,6 +3,7 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
 	Features:
 	* scroller_richtext support (Tickit::Widget::Scroller::Item::RichText)
+	* floatbox and float support (Tickit::Widget::FloatBox)
 
 0.010     2014-01-26 05:52:44+00:00 Europe/London
 	Features:
