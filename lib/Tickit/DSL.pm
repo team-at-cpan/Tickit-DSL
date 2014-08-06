@@ -21,7 +21,8 @@ Tickit::DSL - domain-specific language for Tickit terminal apps
 =head1 DESCRIPTION
 
 WARNING: This is an early version, has an experimental API, and is
-subject to change in future. Please get in contact and/or wait for 1.0 if you want something stable.
+subject to change in future. Please get in contact and/or wait for
+1.0 if you want something stable.
 
 Provides a simplified interface for writing Tickit applications. This is
 mainly intended for prototyping:
@@ -1125,6 +1126,8 @@ __END__
 
 =item * L<Tickit::Widget::Entry>
 
+=item * L<Tickit::Widget::FloatBox>
+
 =item * L<Tickit::Widget::Frame>
 
 =item * L<Tickit::Widget::GridBox>
@@ -1175,5 +1178,5 @@ Tom Molesworth <cpan@entitymodel.com>
 
 =head1 LICENSE
 
-Copyright Tom Molesworth 2012-2013. Licensed under the same terms as Perl itself.
+Copyright Tom Molesworth 2012-2014. Licensed under the same terms as Perl itself.
 
