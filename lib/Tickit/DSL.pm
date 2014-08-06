@@ -520,7 +520,7 @@ sub scrollbox(&@) {
 		local $PARENT = 'Tickit::Widget::ScrollBox';
 		local @PENDING_CHILD;
 		$code->();
-		
+
 		Tickit::Widget::ScrollBox->new(
 			child => $PENDING_CHILD[0],
 			%args
