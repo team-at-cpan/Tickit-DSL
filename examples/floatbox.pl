@@ -7,29 +7,20 @@ vbox {
 	floatbox {
 		vbox {
 			static 'top line';
-			frame {
-				$::BT = button {
+			hbox {
+				button {
 					float {
-						vbox {
-							static 'lol hi';
-							hbox {
-								static 'left';
-								static 'right';
-							} 'parent:expand' => 1;
-						} 'parent:expand' => 1;
-					} top => 1, left => 1, bottom => 5, right => 30;
-				} 'OK', 'parent:expand' => 1;
+						frame {
+							placeholder;
+						};
+					} top => 1, left => 1, bottom => 7, right => 30;
+				} 'Create float';
+				button {
+					tickit->stop;
+				} 'Exit';
 			} 'parent:expand' => 1;
 			static 'last line';
 		} 'parent:expand' => 1;
-	}
+	} 'parent:expand' => 1;
 };
-later {
-	my $w = $::BT;
-	while($w && $w->parent) {
-		warn "Widget $w => parent " . $w->parent . ", root is " . tickit->{root_widget};
-		$w = $w->parent;
-	}
-	exit;
-} if 0;
 tickit->run;
