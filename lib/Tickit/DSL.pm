@@ -675,12 +675,11 @@ sub float(&@) {
 	my ($code, %args) = @_;
 	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 
+	# Work out which container to use - either the least-distant ancestor,
+	# or a specific floatbox if one was provided
 	my $floatbox = delete($args{container}) || $PARENT;
-	warn "FB = $floatbox\n";
-
 	while($floatbox && !$floatbox->isa('Tickit::Widget::FloatBox')) {
 		$floatbox = $floatbox->parent;
-		warn "FB = $floatbox\n";
 	}
 	die "No floatbox found for this float" unless $floatbox;
 
