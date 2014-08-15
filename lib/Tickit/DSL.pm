@@ -688,9 +688,10 @@ sub float(&@) {
 		child => $w,
 		%args
 	);
+	# The new float won't be visible yet, defer this code until the
+	# window is ready.
 	later {
 		local $PARENT = $w;
-		warn "in later";
 		$code->($w);
 	};
 }
