@@ -830,11 +830,17 @@ second parameter is the label:
 
 sub button(&@) {
 	my $code = shift;
-	my %args = (on_click => $code, label => @_);
+	my %args = (
+		label => @_
+	);
 	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::Button->new(
 		%args
 	);
+	$w->set_on_click(sub {
+		local $PARENT = $w->parent;
+		$code->($w->parent);
+	});
 	{
 		local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
 		apply_widget($w);
