@@ -89,7 +89,6 @@ our @EXPORT = our @EXPORT_OK = qw(
 	placeholder placegrid decoration
 	statusbar
 	menubar submenu menuitem menuspacer
-	monthview
 );
 
 =head1 METHODS
@@ -714,6 +713,8 @@ sub statusbar(&@) {
 	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
 	apply_widget($w);
 }
+
+=head1 FUNCTIONS - General widgets
 
 =head2 static
 
