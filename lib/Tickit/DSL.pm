@@ -1094,8 +1094,8 @@ sub apply_widget {
 		} elsif($PARENT->isa('Tickit::Widget::GridBox')) {
 			$PARENT->add($GRID_ROW, $GRID_COL++, $w, @WIDGET_ARGS);
 		} elsif($PARENT->isa('Tickit::Widget::FloatBox')) {
+			# Needs 0.02+ to ensure parent is set correctly
 			$PARENT->set_base_child($w);
-			$PARENT->add($w);
 		} else {
 			$PARENT->add($w, @WIDGET_ARGS);
 		}
