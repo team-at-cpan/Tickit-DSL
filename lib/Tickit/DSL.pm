@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use parent qw(Exporter);
 
-our $VERSION = '0.013';
+our $VERSION = '0.014';
 
 =head1 NAME
 
@@ -1231,7 +1231,7 @@ __END__
 
 =head1 AUTHOR
 
-Tom Molesworth <cpan@entitymodel.com>
+Tom Molesworth <cpan@perlsite.co.uk>
 
 =head1 LICENSE
 
