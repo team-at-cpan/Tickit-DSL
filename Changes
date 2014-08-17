@@ -1,7 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
-	No new features.
+	Features:
+	* console support (Tickit::Console)
 
 	Documentation:
 	* Fixed email address

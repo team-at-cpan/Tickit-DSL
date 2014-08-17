@@ -31,6 +31,8 @@ mainly intended for prototyping:
 
 =cut
 
+# spot the odd one out
+use Tickit::Console;
 use Tickit::Widget::Border;
 use Tickit::Widget::Box;
 use Tickit::Widget::Button;
@@ -86,6 +88,7 @@ our @EXPORT = our @EXPORT_OK = qw(
 	static entry checkbox button
 	radiogroup radiobutton
 	scroller scroller_text scroller_richtext scrollbox
+	console
 	tabbed
 	tree table
 	placeholder placegrid decoration
@@ -587,6 +590,36 @@ a L<String::Tagged> instance, like this:
 sub scroller_richtext {
 	my $w = Tickit::Widget::Scroller::Item::RichText->new(shift);
 	apply_widget($w);
+}
+
+=head2 console
+
+Console widget. Current just supports creating the
+console and setting an on_line callback:
+
+ my $con = console {
+  warn "Had a line: @_";
+ };
+ $con->add_tab(
+  name => 'test',
+  on_line => sub { warn "test line: @_" }
+ );
+
+although a future version may provide C< console_tab >
+as a helper function for adding tabs to an existing
+console.
+
+=cut
+
+sub console(&@) {
+	my %args = (on_line => @_);
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+	my $w = Tickit::Console->new(
+		%args
+	);
+	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
+	apply_widget($w);
+	$w
 }
 
 =head1 FUNCTIONS - Miscellaneous container
