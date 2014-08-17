@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Features:
+	* desktop support (Tickit::Widget::Layout::Desktop)
 
 0.014     2014-08-16 22:10:46+01:00 Europe/London
 	Features:
