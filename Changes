@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	No new features.
+
+	Documentation:
+	* Fixed email address
 
 0.013     2014-08-16 19:26:52+01:00 Europe/London
 	Features:
