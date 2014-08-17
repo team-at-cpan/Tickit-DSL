@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Features:
+	* table support (Tickit::Widget::Table)
 
 0.012     2014-08-16 04:44:59+01:00 Europe/London
 	Features:
