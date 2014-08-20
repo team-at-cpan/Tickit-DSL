@@ -756,7 +756,7 @@ sub float(&@) {
 	die "No floatbox found for this float" unless $floatbox;
 
 	my $w = Tickit::Widget::VBox->new;
-	$floatbox->add_float(
+	my $float = $floatbox->add_float(
 		child => $w,
 		%args
 	);
@@ -764,7 +764,7 @@ sub float(&@) {
 	# window is ready.
 	later {
 		local $PARENT = $w;
-		$code->($w);
+		$code->($float);
 	};
 }
 
