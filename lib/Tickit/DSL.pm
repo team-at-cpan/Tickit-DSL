@@ -5,7 +5,7 @@ use warnings;
 
 use parent qw(Exporter);
 
-our $VERSION = '0.015';
+our $VERSION = '0.016';
 
 =head1 NAME
 
@@ -1103,12 +1103,32 @@ one of these.
   };
  };
 
+You'll probably want to show popup menus at some
+point. Try this:
+
+ floatbox {
+  vbox {
+   menubar {
+    submenu Help => sub {
+     menuitem About => sub {
+	  float {
+	   static 'this is a popup message'
+	  }
+    };
+   };
+   static 'plain text under the menubar';
+  }
+ };
+
 =cut
 
+# haxx. A menubar has no link back to the container.
+our $MENU_PARENT;
 sub menubar(&@) {
 	my ($code, %args) = @_;
 	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Widget::MenuBar->new(%args);
+	local $MENU_PARENT = $PARENT;
 	{
 		local $PARENT = $w;
 		$code->($w);
@@ -1158,9 +1178,13 @@ A menu is not much use without something in it. See L</menubar>.
 
 sub menuitem {
 	my ($text, $code) = splice @_, 0, 2;
+	my $parent = $MENU_PARENT;
 	my $w = Tickit::Widget::Menu::Item->new(
 		name        => $text,
-		on_activate => $code,
+		on_activate => sub {
+			local $PARENT = $parent;
+			$code->($PARENT);
+		},
 		@_
 	);
 	apply_widget($w);
