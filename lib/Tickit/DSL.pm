@@ -921,13 +921,57 @@ sub button(&@) {
 
 =head2 tree
 
-A L<Tickit::Widget::Tree>. If it works I'd be amazed.
+A L<Tickit::Widget::Tree>. It only partially works, but you're welcome to try it.
+
+ tree {
+	warn "activated: @_\n";
+ } data => [
+ 	node1 => [
+		qw(some nodes here)
+	],
+	node2 => [
+		qw(more nodes in this one),
+		and => [
+			qw(this has a few child nodes too)
+		]
+	],
+ ];
 
 =cut
 
 sub tree(&@) {
 	my %args = (on_activate => @_);
 	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+
+	# this should really be in ::Tree
+	if(my $data = delete $args{data}) {
+		my $root = Tree::DAG_Node->new;
+		my $add;
+		$add = sub {
+			my ($parent, $item) = @_;
+			if(my $ref = ref $item) {
+				if($ref eq 'ARRAY') {
+					my $prev = $parent;
+					for (@$item) {
+						if(ref) {
+							$add->($prev, $_);
+						} else {
+							my $node = $parent->new_daughter;
+							$node->name($_);
+							$prev = $node;
+						}
+					}
+				} else {
+					die 'This data was not in the desired format. Sorry.';
+				}
+			} else {
+				my $node = $parent->new_daughter;
+				$node->name($item);
+			}
+		};
+		$add->($root, $data);
+		$args{root} = $root;
+	}
 	my $w = Tickit::Widget::Tree->new(
 		%args
 	);

@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Features:
+	* tree accepts data parameter
 
 0.015     2014-08-17 16:11:50+01:00 Europe/London
 	Features:
