@@ -20,7 +20,7 @@ requires 'Tickit::Widget::SparkLine', '>= 0.001';
 requires 'Tickit::Widget::Statusbar', '>= 0.003';
 requires 'Tickit::Widget::Tabbed', '>= 0.010';
 requires 'Tickit::Widget::Table', '>= 0.202';
-requires 'Tickit::Widget::Tree', '>= 0.103';
+requires 'Tickit::Widget::Tree', '>= 0.107';
 
 on 'test' => sub {
 	requires 'Test::More', '>= 0.98';

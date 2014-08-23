@@ -5,7 +5,7 @@ use warnings;
 
 use parent qw(Exporter);
 
-our $VERSION = '0.016';
+our $VERSION = '0.017';
 
 =head1 NAME
 
@@ -944,35 +944,6 @@ sub tree(&@) {
 	my %args = (on_activate => @_);
 	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 
-	# this should really be in ::Tree
-	if(my $data = delete $args{data}) {
-		my $root = Tree::DAG_Node->new;
-		my $add;
-		$add = sub {
-			my ($parent, $item) = @_;
-			if(my $ref = ref $item) {
-				if($ref eq 'ARRAY') {
-					my $prev = $parent;
-					for (@$item) {
-						if(ref) {
-							$add->($prev, $_);
-						} else {
-							my $node = $parent->new_daughter;
-							$node->name($_);
-							$prev = $node;
-						}
-					}
-				} else {
-					die 'This data was not in the desired format. Sorry.';
-				}
-			} else {
-				my $node = $parent->new_daughter;
-				$node->name($item);
-			}
-		};
-		$add->($root, $data);
-		$args{root} = $root;
-	}
 	my $w = Tickit::Widget::Tree->new(
 		%args
 	);
