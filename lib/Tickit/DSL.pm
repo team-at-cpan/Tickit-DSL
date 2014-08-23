@@ -36,6 +36,7 @@ mainly intended for prototyping:
 use Tickit::Console;
 use Tickit::Widget::Border;
 use Tickit::Widget::Box;
+use Tickit::Widget::Breadcrumb;
 use Tickit::Widget::Button;
 use Tickit::Widget::CheckButton;
 use Tickit::Widget::Decoration;
@@ -92,7 +93,7 @@ our @EXPORT = our @EXPORT_OK = qw(
 	scroller scroller_text scroller_richtext scrollbox
 	console
 	tabbed
-	tree table
+	tree table breadcrumb
 	placeholder placegrid decoration
 	statusbar
 	menubar submenu menuitem menuspacer
@@ -1002,9 +1003,28 @@ sub table(&@) {
 	my $w = Tickit::Widget::Table->new(
 		%args
 	);
-	$w->adapter->get(
-		items => [0,1]
-	)->on_done(sub { warn "item: " . join ',', map @{$_||[]}, @{$_[0]} });
+	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
+	apply_widget($w);
+	$w
+}
+
+=head2 breadcrumb
+
+Provides a "breadcrumb trail".
+
+ my $bc = breadcrumb {
+  warn "crumb selected: @_";
+ };
+ $bc->adapter->push([qw(some path here)]);
+
+=cut
+
+sub breadcrumb(&@) {
+	my %args = (on_activate => @_);
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+	my $w = Tickit::Widget::Breadcrumb->new(
+		%args
+	);
 	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
 	apply_widget($w);
 	$w
