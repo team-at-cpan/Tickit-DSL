@@ -67,7 +67,7 @@ use Tickit::Widget::Statusbar;
 use Tickit::Widget::Tabbed;
 use Tickit::Widget::Table;
 use Tickit::Widget::Tree;
-use Tickit::Widget::VBox;
+use Tickit::Widget::VBox 0.46; # the hypothesis is that this may help catch old Tickit installs
 use Tickit::Widget::VSplit;
 
 use List::UtilsBy qw(extract_by);
