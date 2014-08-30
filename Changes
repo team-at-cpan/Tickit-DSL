@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	No new features.
+
+	Dependencies:
+	* Updated Tickit::Widget::Table.
 
 0.018     2014-08-30 02:32:34+01:00 Europe/London
 	No new features.
