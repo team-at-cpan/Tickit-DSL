@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	No new features.
+
+	Dependencies:
+	* More version updates
 
 0.020     2014-08-31 01:25:41+01:00 Europe/London
 	No new features.
