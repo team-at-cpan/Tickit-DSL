@@ -23,7 +23,7 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "Exporter" => 0,
     "List::UtilsBy" => 0,
-    "Tickit" => "0.46",
+    "Tickit" => "0.49",
     "Tickit::Widget::Breadcrumb" => "0.002",
     "Tickit::Widget::Decoration" => "0.004",
     "Tickit::Widget::FileViewer" => "0.004",
@@ -50,7 +50,7 @@ my %WriteMakefileArgs = (
     "Test::CheckDeps" => "0.010",
     "Test::More" => "0.98"
   },
-  "VERSION" => "0.023",
+  "VERSION" => "0.024",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -66,7 +66,7 @@ my %FallbackPrereqs = (
   "List::UtilsBy" => 0,
   "Test::CheckDeps" => "0.010",
   "Test::More" => "0.98",
-  "Tickit" => "0.46",
+  "Tickit" => "0.49",
   "Tickit::Widget::Breadcrumb" => "0.002",
   "Tickit::Widget::Decoration" => "0.004",
   "Tickit::Widget::FileViewer" => "0.004",
