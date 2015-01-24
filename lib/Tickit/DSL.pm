@@ -5,7 +5,7 @@ use warnings;
 
 use parent qw(Exporter);
 
-our $VERSION = '0.024';
+our $VERSION = '0.025';
 
 =head1 NAME
 
