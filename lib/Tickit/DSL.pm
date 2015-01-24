@@ -1285,19 +1285,9 @@ sub apply_widget {
 			$PARENT->set_base_child($w);
 		} elsif($PARENT->isa('Tickit::Widget::Layout::Desktop')) {
 			my %args = @WIDGET_ARGS;
-			my $dw = $PARENT->window;
-			my $left = $args{left} // int($dw->cols * rand);
-			my $top = $args{top} // int($dw->lines * rand);
-			my $cols = $args{cols} // (20 + int(10 * rand));
-			my $lines = $args{cols} // (5 + int(20 * rand));
-			$left = $dw->cols - $cols if $left + $cols >= $dw->cols;
-			$top = $dw->lines - $lines if $top + $lines >= $dw->lines;
 			$PARENT->create_panel(
-				label  => $args{label} // 'New window',
-				left   => $left,
-				top    => $top,
-				cols   => $cols,
-				lines  => $lines,
+				label  => 'New window',
+				%args,
 			)->add($w);
 		} else {
 			$PARENT->add($w, @WIDGET_ARGS);
