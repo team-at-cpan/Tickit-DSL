@@ -2,7 +2,7 @@ requires 'parent', 0;
 requires 'Exporter', 0;
 requires 'List::UtilsBy', 0;
 
-requires 'Tickit', '>= 0.46';
+requires 'Tickit', '>= 0.49';
 requires 'Tickit::Widgets', '>= 0.19';
 requires 'Tickit::Widget::Breadcrumb', '>= 0.002';
 requires 'Tickit::Widget::Decoration', '>= 0.004';
