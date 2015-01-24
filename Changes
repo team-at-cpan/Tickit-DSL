@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	No new features.
+
+	Dependencies:
+	* Dropped Tickit::Console, since it doesn't install currently.
 
 0.022     2014-08-31 15:07:05+01:00 Europe/London
 	No new features.
