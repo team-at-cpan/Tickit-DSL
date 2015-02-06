@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	No new features.
+
+	Dependencies:
+	* table, logpanel and desktop updated again
 
 0.027     2015-02-06 18:30:45+00:00 Europe/London
 	No new features.
