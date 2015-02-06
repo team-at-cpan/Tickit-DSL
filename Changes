@@ -1,6 +1,11 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Features:
+	* logpanel support (Tickit::Widget::LogAny)
+
+	Dependencies:
+	* Table, Tree updated
 
 0.025     2015-02-04 01:35:30+00:00 Europe/London
 	Dependencies:
