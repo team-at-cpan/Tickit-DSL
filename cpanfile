@@ -3,6 +3,7 @@ requires 'Exporter', 0;
 requires 'List::UtilsBy', 0;
 
 requires 'Tickit', '>= 0.50';
+requires 'Tickit::Console', '>= 0.06';
 requires 'Tickit::Widgets', '>= 0.19';
 requires 'Tickit::Widget::Breadcrumb', '>= 0.003';
 requires 'Tickit::Widget::Decoration', '>= 0.004';
@@ -24,7 +25,6 @@ requires 'Tickit::Widget::Table', '>= 0.214';
 requires 'Tickit::Widget::Tree', '>= 0.113';
 
 recommends 'Tickit::Async', 0;
-recommends 'Tickit::Console', '>= 0.06';
 
 on 'test' => sub {
 	requires 'Test::More', '>= 0.98';
