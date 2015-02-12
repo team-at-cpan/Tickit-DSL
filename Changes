@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.028     2015-02-12 21:29:14+00:00 Europe/London
 	Features:
 	* figlet - render larger text
 	* console added back in by default
