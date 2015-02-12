@@ -5,7 +5,7 @@ use warnings;
 
 use parent qw(Exporter);
 
-our $VERSION = '0.027';
+our $VERSION = '0.028';
 
 =head1 NAME
 
@@ -32,9 +32,7 @@ mainly intended for prototyping:
 
 =cut
 
-# spot the odd one out - doesn't install currently, will add back in when
-# this is fixed. https://rt.cpan.org/Public/Bug/Display.html?id=101169
-# use Tickit::Console;
+use Tickit::Console;
 use Tickit::Widget::Border;
 use Tickit::Widget::Box;
 use Tickit::Widget::Breadcrumb;

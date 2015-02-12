@@ -1,7 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
-	No new features.
+	Features:
+	* figlet - render larger text
+	* console added back in by default
 
 	Dependencies:
 	* table, logpanel and desktop updated again
