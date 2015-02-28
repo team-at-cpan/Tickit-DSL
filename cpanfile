@@ -18,7 +18,7 @@ requires 'Tickit::Widget::SegmentDisplay', '>= 0.02';
 requires 'Tickit::Widget::SparkLine', '>= 0.104';
 requires 'Tickit::Widget::Statusbar', '>= 0.004';
 requires 'Tickit::Widget::Tabbed', '>= 0.016';
-requires 'Tickit::Widget::Table', '>= 0.207';
+requires 'Tickit::Widget::Table', '>= 0.208';
 requires 'Tickit::Widget::Tree', '>= 0.109';
 
 recommends 'Tickit::Async', 0;

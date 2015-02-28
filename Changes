@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Dependencies:
+	* Version updates
 
 0.024     2015-01-24 14:10:31+00:00 Europe/London
 	Features:
