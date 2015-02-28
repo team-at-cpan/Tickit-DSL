@@ -6,6 +6,7 @@ requires 'Tickit', '>= 0.50';
 requires 'Tickit::Widgets', '>= 0.19';
 requires 'Tickit::Widget::Breadcrumb', '>= 0.003';
 requires 'Tickit::Widget::Decoration', '>= 0.004';
+requires 'Tickit::Widget::Figlet', '>= 0.001';
 requires 'Tickit::Widget::FileViewer', '>= 0.004';
 requires 'Tickit::Widget::FloatBox', '>= 0.02';
 requires 'Tickit::Widget::Layout::Desktop', '>= 0.009';
