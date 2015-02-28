@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Features:
+	* Panel positioning (for desktop { }) now passes through the
+	top/left/right/bottom attributes unchanged, previously was
+	assigning random position for dimensions that were not assigned
 
 0.023     2015-01-24 09:01:58+00:00 Europe/London
 	No new features.
