@@ -5,7 +5,7 @@ use warnings;
 
 use parent qw(Exporter);
 
-our $VERSION = '0.025';
+our $VERSION = '0.026';
 
 =head1 NAME
 
@@ -50,6 +50,7 @@ use Tickit::Widget::HBox;
 use Tickit::Widget::HSplit;
 use Tickit::Widget::Layout::Desktop;
 use Tickit::Widget::Layout::Relative;
+use Tickit::Widget::LogAny;
 use Tickit::Widget::Menu;
 use Tickit::Widget::MenuBar;
 use Tickit::Widget::Menu::Item;
@@ -99,6 +100,7 @@ our @EXPORT = our @EXPORT_OK = qw(
 	statusbar
 	menubar submenu menuitem menuspacer
 	fileviewer
+	logpanel
 );
 
 =head1 METHODS
@@ -653,6 +655,25 @@ sub console(&@) {
 	my %args = (on_line => @_);
 	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Console->new(
+		%args
+	);
+	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
+	apply_widget($w);
+	$w
+}
+
+=head2 logpanel
+
+Displays any log messages raised by L<Log::Any> or, optionally, through STDERR.
+
+ logpanel stderr => 1;
+
+=cut
+
+sub logpanel(@) {
+	my %args = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+	my $w = Tickit::Widget::LogAny->new(
 		%args
 	);
 	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
