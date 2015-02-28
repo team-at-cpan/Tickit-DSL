@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.024     2015-01-24 14:10:31+00:00 Europe/London
 	Features:
 	* Panel positioning (for desktop { }) now passes through the
 	top/left/right/bottom attributes unchanged, previously was
