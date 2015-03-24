@@ -5,7 +5,7 @@ use warnings;
 
 use parent qw(Exporter);
 
-our $VERSION = '0.028';
+our $VERSION = '0.029';
 
 =head1 NAME
 
@@ -67,8 +67,10 @@ use Tickit::Widget::Static;
 use Tickit::Widget::Statusbar;
 use Tickit::Widget::Tabbed;
 use Tickit::Widget::Table;
+use Tickit::Widget::Term;
 use Tickit::Widget::Tree;
 use Tickit::Widget::VBox 0.46; # the hypothesis is that this may help catch old Tickit installs
+use Tickit::Widget::VHBox;
 use Tickit::Widget::VSplit;
 
 use List::UtilsBy qw(extract_by);
@@ -92,7 +94,7 @@ our @EXPORT = our @EXPORT_OK = qw(
 	static entry checkbox button
 	radiogroup radiobutton
 	scroller scroller_text scroller_richtext scrollbox
-	console
+	console term
 	tabbed
 	tree table breadcrumb
 	placeholder placegrid decoration
@@ -655,6 +657,25 @@ sub console(&@) {
 	my %args = (on_line => @_);
 	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Console->new(
+		%args
+	);
+	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);
+	apply_widget($w);
+	$w
+}
+
+=head2 term
+
+Terminal widget.
+
+ term command => '/bin/bash';
+
+=cut
+
+sub term(@) {
+	my %args = @_;
+	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
+	my $w = Tickit::Widget::Term->new(
 		%args
 	);
 	local @WIDGET_ARGS = (@WIDGET_ARGS, %parent_args);

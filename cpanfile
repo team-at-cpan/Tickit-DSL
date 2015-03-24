@@ -20,9 +20,11 @@ requires 'Tickit::Widget::ScrollBox', '>= 0.03';
 requires 'Tickit::Widget::SegmentDisplay', '>= 0.02';
 requires 'Tickit::Widget::SparkLine', '>= 0.104';
 requires 'Tickit::Widget::Statusbar', '>= 0.004';
-requires 'Tickit::Widget::Tabbed', '>= 0.017';
+requires 'Tickit::Widget::Tabbed', '>= 0.018';
 requires 'Tickit::Widget::Table', '>= 0.214';
+requires 'Tickit::Widget::Term', '>= 0.001';
 requires 'Tickit::Widget::Tree', '>= 0.113';
+requires 'Tickit::Widget::VHBox', '>= 0.001';
 
 recommends 'Tickit::Async', 0;
 
