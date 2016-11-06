@@ -15,15 +15,15 @@ requires 'Tickit::Widget::Layout::Relative', '>= 0.005';
 requires 'Tickit::Widget::LogAny', '>= 0.004';
 requires 'Tickit::Widget::Menu', '>= 0.08';
 requires 'Tickit::Widget::Progressbar', '>= 0.101';
-requires 'Tickit::Widget::Scroller', '>= 0.18';
-requires 'Tickit::Widget::ScrollBox', '>= 0.03';
+requires 'Tickit::Widget::Scroller', '>= 0.22';
+requires 'Tickit::Widget::ScrollBox', '>= 0.07';
 requires 'Tickit::Widget::SegmentDisplay', '>= 0.02';
 requires 'Tickit::Widget::SparkLine', '>= 0.104';
 requires 'Tickit::Widget::Statusbar', '>= 0.004';
 requires 'Tickit::Widget::Tabbed', '>= 0.018';
 requires 'Tickit::Widget::Table', '>= 0.215';
 requires 'Tickit::Widget::Term', '>= 0.002';
-requires 'Tickit::Widget::Tree', '>= 0.113';
+requires 'Tickit::Widget::Tree', '>= 0.114';
 requires 'Tickit::Widget::VHBox', '>= 0.001';
 
 recommends 'Tickit::Async', 0;

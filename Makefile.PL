@@ -45,6 +45,7 @@ my %WriteMakefileArgs = (
     "parent" => 0
   },
   "TEST_REQUIRES" => {
+    "ExtUtils::MakeMaker" => 0,
     "File::Spec" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
@@ -60,6 +61,7 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Exporter" => 0,
+  "ExtUtils::MakeMaker" => 0,
   "File::Spec" => 0,
   "IO::Handle" => 0,
   "IPC::Open3" => 0,
