@@ -2,7 +2,7 @@ requires 'parent', 0;
 requires 'Exporter', 0;
 requires 'List::UtilsBy', 0;
 
-requires 'Tickit', '>= 0.50';
+requires 'Tickit', '>= 0.60';
 requires 'Tickit::Console', '>= 0.06';
 requires 'Tickit::Widgets', '>= 0.19';
 requires 'Tickit::Widget::Breadcrumb', '>= 0.003';
@@ -21,7 +21,7 @@ requires 'Tickit::Widget::SegmentDisplay', '>= 0.02';
 requires 'Tickit::Widget::SparkLine', '>= 0.104';
 requires 'Tickit::Widget::Statusbar', '>= 0.004';
 requires 'Tickit::Widget::Tabbed', '>= 0.018';
-requires 'Tickit::Widget::Table', '>= 0.214';
+requires 'Tickit::Widget::Table', '>= 0.215';
 requires 'Tickit::Widget::Term', '>= 0.002';
 requires 'Tickit::Widget::Tree', '>= 0.113';
 requires 'Tickit::Widget::VHBox', '>= 0.001';
