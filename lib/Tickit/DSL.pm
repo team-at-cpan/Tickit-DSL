@@ -1126,9 +1126,10 @@ but eventually will be called when the current line is activated in the widget.
 =cut
 
 sub fileviewer(&;@) {
-	my $code = shift;
+	my ($code, $file) = splice @_, 0, 2;
 	my %args = (
-		file => @_
+		@_,
+		file => $file
 	);
 	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 
