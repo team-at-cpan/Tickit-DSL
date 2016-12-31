@@ -1,6 +1,11 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	No new features.
+
+	Dependencies:
+	* Added ::Choice and ::Calendars, although they are not yet supported directly.
+	* Updated ::Table and ::Desktop
 
 0.029     2016-11-06 23:29:02+08:00 Asia/Kuala_Lumpur
 	Features:
