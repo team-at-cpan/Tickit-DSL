@@ -3,6 +3,9 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
 	No new features.
 
+	Dependencies:
+	* Updated ::LogAny to latest version
+
 	Metadata updates:
 	* Minor dist.ini cleanup based on CPANTS complaints
 	* Added github info
