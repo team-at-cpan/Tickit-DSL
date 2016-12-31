@@ -6,7 +6,9 @@ use Eval::WithLexicals;
 use Try::Tiny;
 use Data::Dumper;
 
-my $eval = Eval::WithLexicals->with_plugins("HintPersistence")->new(
+my $eval = Eval::WithLexicals->with_plugins(
+	"HintPersistence"
+)->new(
 	context => 'scalar',
 );
 vbox {
