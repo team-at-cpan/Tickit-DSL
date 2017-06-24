@@ -1,6 +1,15 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+    No new features.
+
+	Dependencies:
+	* Updated Tickit to 0.63
+	* Updated ::Layout::Desktop to latest version
+    * Removed Tickit::Console from deps due to test failures (RT101718)
+
+    Widgets:
+    * console now loads Tickit::Console at runtime
 
 0.031     2016-12-31 21:44:23+08:00 Asia/Kuala_Lumpur
 	No new features.

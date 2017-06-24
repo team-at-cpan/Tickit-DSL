@@ -32,7 +32,6 @@ mainly intended for prototyping:
 
 =cut
 
-use Tickit::Console;
 use Tickit::Widget::Border;
 use Tickit::Widget::Box;
 use Tickit::Widget::Breadcrumb;
@@ -651,9 +650,14 @@ although a future version may provide C< console_tab >
 as a helper function for adding tabs to an existing
 console.
 
+Note that this will attempt to load L<Tickit::Console>
+at runtime, so it may throw an exception if it is not
+already installed.
+
 =cut
 
 sub console(&@) {
+    require Tickit::Console;
 	my %args = (on_line => @_);
 	my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
 	my $w = Tickit::Console->new(
