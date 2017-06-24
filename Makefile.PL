@@ -20,7 +20,6 @@ my %WriteMakefileArgs = (
     "Exporter" => 0,
     "List::UtilsBy" => 0,
     "Tickit" => "0.63",
-    "Tickit::Console" => "0.06",
     "Tickit::Widget::Breadcrumb" => "0.003",
     "Tickit::Widget::Calendars" => "0.001",
     "Tickit::Widget::Choice" => "0.02",
@@ -54,7 +53,7 @@ my %WriteMakefileArgs = (
     "Test::CheckDeps" => "0.010",
     "Test::More" => "0.98"
   },
-  "VERSION" => "0.031",
+  "VERSION" => "0.032",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -71,7 +70,6 @@ my %FallbackPrereqs = (
   "Test::CheckDeps" => "0.010",
   "Test::More" => "0.98",
   "Tickit" => "0.63",
-  "Tickit::Console" => "0.06",
   "Tickit::Widget::Breadcrumb" => "0.003",
   "Tickit::Widget::Calendars" => "0.001",
   "Tickit::Widget::Choice" => "0.02",
