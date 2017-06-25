@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+    No new features.
+
+	Dependencies:
+	* Updated ::Term to 0.003
 
 0.032     2017-06-25 03:32:42+08:00 Asia/Kuala_Lumpur
     No new features.
