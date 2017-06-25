@@ -23,7 +23,7 @@ requires 'Tickit::Widget::SparkLine', '>= 0.104';
 requires 'Tickit::Widget::Statusbar', '>= 0.004';
 requires 'Tickit::Widget::Tabbed', '>= 0.018';
 requires 'Tickit::Widget::Table', '>= 0.216';
-requires 'Tickit::Widget::Term', '>= 0.002';
+requires 'Tickit::Widget::Term', '>= 0.003';
 requires 'Tickit::Widget::Tree', '>= 0.114';
 requires 'Tickit::Widget::VHBox', '>= 0.001';
 
