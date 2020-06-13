@@ -1,6 +1,14 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+    No new features.
+
+    Dependencies:
+
+    * due to lack of support for Object::Pad-based `class NAME VERSION` syntax,
+    this no longer installs due to the toolchain not being able to identify
+    the version of the installed modules. All version specifications have
+    been removed from `cpanfile` as a workaround, see also https://github.com/Perl-Toolchain-Gang/Module-Metadata/pull/34
 
 0.033     2017-06-26 03:53:45+08:00 Asia/Kuala_Lumpur
     No new features.
