@@ -6,6 +6,7 @@ use warnings;
 use parent qw(Exporter);
 
 our $VERSION = '0.034';
+# AUTHORITY
 
 =head1 NAME
 
