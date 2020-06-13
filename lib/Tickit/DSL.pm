@@ -658,7 +658,7 @@ already installed.
 =cut
 
 sub console(&@) {
-    require Tickit::Console;
+    require "Tickit" . "/Console.pm";
     my %args = (on_line => @_);
     my %parent_args = map {; $_ => delete $args{'parent:' . $_} } map /^parent:(.*)/ ? $1 : (), keys %args;
     my $w = Tickit::Console->new(
